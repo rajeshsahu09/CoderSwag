@@ -31,7 +31,7 @@ class MyAdapter(private val myDataset: List<Category>) : RecyclerView.Adapter<My
         // - replace the contents of the view with that element
         val categoryImage: ImageView = holder.categoryView.findViewById(R.id.categoryimage)
         val categoryName: TextView = holder.categoryView.findViewById(R.id.categorytext)
-        println("======================================================")
+        println("Heavy Computing***")
 
         val imgresid = holder.context.resources.getIdentifier(myDataset[position].image, "drawable", holder.context.packageName)
         categoryImage.setImageResource(imgresid)
