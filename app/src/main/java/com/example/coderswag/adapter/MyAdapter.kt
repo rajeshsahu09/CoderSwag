@@ -15,30 +15,34 @@ class MyAdapter(private val myDataset: List<Category>) : RecyclerView.Adapter<My
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder.
     // Each data item is just a string in this case that is shown in a TextView.
-    class MyViewHolder(var categoryView: View, var context: Context) : RecyclerView.ViewHolder(categoryView)
+    class MyViewHolder(var categoryView: View, var context: Context) : RecyclerView.ViewHolder(categoryView) {
+        val categoryImage: ImageView = categoryView.findViewById(R.id.categoryimage)
+        val categoryName: TextView = categoryView.findViewById(R.id.categorytext)
+
+        fun bindCategoryImage(myCategory: Category) {
+            categoryName.text =  myCategory.title // set the title
+            // set the image
+            val resourceId = this.context.resources.getIdentifier(myCategory.image, "drawable", this.context.packageName)
+            categoryImage.setImageResource(resourceId)
+        }
+    }
 
     // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyAdapter.MyViewHolder {
         // create a new view
-        val categoryView = LayoutInflater.from(parent.context).inflate(R.layout.category_list_item, parent, false) as View
+        val categoryView = LayoutInflater.from(parent.context).inflate(R.layout.category_list_item, parent, false)
 
         return MyViewHolder(categoryView, parent.context)
     }
 
     // Replace the contents of a view (invoked by the layout manager)
+    // displays the content of data onto recycler view
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        val categoryImage: ImageView = holder.categoryView.findViewById(R.id.categoryimage)
-        val categoryName: TextView = holder.categoryView.findViewById(R.id.categorytext)
-        println("Heavy Computing***")
-
-        val imgresid = holder.context.resources.getIdentifier(myDataset[position].image, "drawable", holder.context.packageName)
-        categoryImage.setImageResource(imgresid)
-
-        categoryName.text = myDataset[position].title
+        holder.bindCategoryImage(myDataset[position])
     }
 
     // Return the size of your dataset (invoked by the layout manager)
-    override fun getItemCount() = myDataset.size
+    override fun getItemCount() = myDataset.count()
 }
