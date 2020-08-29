@@ -10,12 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.coderswag.R
 import com.example.coderswag.model.Category
 
-class MyAdapter(private val myDataset: List<Category>) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
+class MyAdapter(private val myDataset: List<Category>, val itemClick: (Category) -> Unit) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder.
     // Each data item is just a string in this case that is shown in a TextView.
-    class MyViewHolder(var categoryView: View, var context: Context) : RecyclerView.ViewHolder(categoryView) {
+    class MyViewHolder(var categoryView: View, var context: Context, val itemClick: (Category) -> Unit) : RecyclerView.ViewHolder(categoryView) {
         val categoryImage: ImageView = categoryView.findViewById(R.id.categoryimage)
         val categoryName: TextView = categoryView.findViewById(R.id.categorytext)
 
@@ -24,6 +24,8 @@ class MyAdapter(private val myDataset: List<Category>) : RecyclerView.Adapter<My
             // set the image
             val resourceId = this.context.resources.getIdentifier(myCategory.image, "drawable", this.context.packageName)
             categoryImage.setImageResource(resourceId)
+
+            categoryView.setOnClickListener { itemClick(myCategory) }
         }
     }
 
@@ -32,7 +34,7 @@ class MyAdapter(private val myDataset: List<Category>) : RecyclerView.Adapter<My
         // create a new view
         val categoryView = LayoutInflater.from(parent.context).inflate(R.layout.category_list_item, parent, false)
 
-        return MyViewHolder(categoryView, parent.context)
+        return MyViewHolder(categoryView, parent.context, itemClick)
     }
 
     // Replace the contents of a view (invoked by the layout manager)
