@@ -19,7 +19,7 @@ class MyAdapter(private val myDataset: List<Category>, val itemClick: (Category)
         val categoryImage: ImageView = categoryView.findViewById(R.id.categoryimage)
         val categoryName: TextView = categoryView.findViewById(R.id.categorytext)
 
-        fun bindCategoryImage(myCategory: Category) {
+        fun bindCategory(myCategory: Category) {
             categoryName.text =  myCategory.title // set the title
             // set the image
             val resourceId = this.context.resources.getIdentifier(myCategory.image, "drawable", this.context.packageName)
@@ -42,7 +42,7 @@ class MyAdapter(private val myDataset: List<Category>, val itemClick: (Category)
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.bindCategoryImage(myDataset[position])
+        holder.bindCategory(myDataset[position])
     }
 
     // Return the size of your dataset (invoked by the layout manager)
